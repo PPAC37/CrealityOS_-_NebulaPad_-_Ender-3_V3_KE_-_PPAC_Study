@@ -145,7 +145,7 @@ Bien noter que le lien symbolique doit etre fait apré le lancement du service `
 D'où le nom `S99t_hist_http` alphabétiquement aprés `S99start_app` )
 
 ~~~
-cat > S99t_hist_http<<'===EOF==='
+cat > /etc/init.d/S99t_hist_http<<'===EOF==='
 #!/bin/sh
 #
 
@@ -164,6 +164,7 @@ esac
 
 exit $?
 ===EOF===
+
 ~~~
 
 Bien noter que le fait, au début, de mettre entre quote la ligne qui permet d'identifier la fin du bloc, evite l'interprétation des caractères spéciaux, et variables. Attention forcement il ne faut pas que le coprs du bloc contienne une ligne identique a celle utilisé pour identifier la fin du bloc (ici mise entre quote au début). cf https://stackoverflow.com/questions/6896025/echo-a-large-chunk-of-text-to-a-file-using-bash.
@@ -183,6 +184,30 @@ reboot
 ~~~
 
 (Normalement a chaque démarrage le lien symbolique sera créé par se service. Et donc on retrouve a l'url `http://<ip>/downloads/humbnail/historyL.txt` le contenu de `/usr/data/creality/userdata/history/print_history_record.json` )
+
+---
+
+Pour créer un fichier `/root/.profile` pour avoir lors de l'ouverture d'une session l'espace disque diponible
+(`~/.profile` automatiquement executé a l'ouverture d'une session)
+~~~
+cat > /root/.profile<<'===EOF==='
+# Mon fichier ~/.profile automatiquement executé a l'ouverture d'une session
+
+# Afficher l'espace disque disponible
+df -h | grep /dev/mmcblk0p10 | awk {'print $3 " / " $2 " (" $4 " available)" '}
+
+# Definition d'alias
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+
+# Fin de mon ficher ~/.profile
+===EOF===
+
+~~~
+
 
 ## Dépôts de références
 
