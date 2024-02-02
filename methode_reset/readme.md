@@ -4,6 +4,9 @@ La méthode de reset des K1* https://github.com/Guilouz/Creality-K1-and-K1-Max/w
 
 (
 
+Dommage il semble que l'on doit absolutment avoir la page.html en local pour que cela fonctionne ...
+
+
 Je me suis permis de mettre la page de reset `Creality_K1_Reset_Utility.html` de Gilouz en ligne via ghithub.io a l'adresse
 
 https://ppac37.github.io/CrealityOS_-_NebulaPad_-_Ender-3_V3_KE_-_PPAC_Study/methode_reset/Creality_K1_Reset_Utility.html
