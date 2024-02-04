@@ -1,5 +1,7 @@
 Pour installer Obico
 
+Il faut savoir que CrealityOS ne fourni pas la commande `bash` et car il se trouve basé sur un linux minimaliste et bidouillé par Creality, cela ne facilite pas les choses.
+
 Le plus simple c'est surement de passer par le "Installation Helper Script" de Guilouz [https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Installation-Helper-Script](https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Installation-Helper-Script
 )  
 pour pouvoir faire [https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Obico](https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Obico)
@@ -91,7 +93,7 @@ https://www.lesimprimantes3d.fr/forum/topic/56971-obico-sur-ender-v3-ke/?do=find
 -->
 
 
-Il y a besoin de la commande curl du dépôt de Guilouz (car celle disponible d'origine manque d'options ...)  
+Il y a besoin de la commande `curl` du dépôt de Guilouz (car celle disponible d'origine manque d'options ...)  
 ( c'est un pré-requis pour installer entware qui fourni opkg. opkg un genre de gestionnaire de paquet qui est un pré-requis pour installer obico ... )
 
 ~~~
@@ -99,7 +101,7 @@ wget -q --no-check-certificate https://raw.githubusercontent.com/Guilouz/Crealit
 chmod +x /tmp/curl >/dev/null 2>&1 & 
 ~~~
 
-une fois que l'on a curl, Il y a besoins de la commande opkg fournis par entware que l'on installe via un script du dépôt de Guilouz
+une fois que l'on a curl, Il y a besoins de la commande `opkg` fournis par entware que l'on installe via un script du dépôt de Guilouz
 
 ~~~
 rm -rf /opt /usr/data/opt
@@ -108,7 +110,100 @@ ln -nsf /usr/data/opt /opt
 wget --no-check-certificate -O - "https://raw.githubusercontent.com/Guilouz/Creality-K1-and-K1-Max/main/Scripts/files/entware/generic.sh" | /bin/sh
 ~~~
 
+<details>
+ <summary>Le script `generic.sh` en question (Cliquez pour déplier!)</summary>
+~~~bash
+#!/bin/sh
+
+TYPE='generic'
+#TYPE='alternative'
+
+#|---------|-----------------------|---------------|---------------|---------------------|-------------------|-------------------|----------------------|-------------------|
+#| ARCH    | aarch64-k3.10         | armv5sf-k3.2  | armv7sf-k2.6  | armv7sf-k3.2        | mipselsf-k3.4     | mipssf-k3.4       | x64-k3.2             | x86-k2.6          |
+#| LOADER  | ld-linux-aarch64.so.1 | ld-linux.so.3 | ld-linux.so.3 | ld-linux.so.3       | ld.so.1           | ld.so.1           | ld-linux-x86-64.so.2 | ld-linux.so.2     |
+#| GLIBC   | 2.27                  | 2.27          | 2.23          | 2.27                | 2.27              | 2.27              | 2.27                 | 2.23              |
+#|---------|-----------------------|---------------|---------------|---------------------|-------------------|-------------------|----------------------|-------------------|
+
+unset LD_LIBRARY_PATH
+unset LD_PRELOAD
+
+ARCH=mipselsf-k3.4
+LOADER=ld.so.1
+GLIBC=2.27
+
+echo 'Info: Checking for prerequisites and creating folders...'
+if [ -d /opt ]; then
+    echo 'Warning: Folder /opt exists!'
+else
+    mkdir /opt
+fi
+# no need to create many folders. entware-opt package creates most
+for folder in bin etc lib/opkg tmp var/lock
+do
+  if [ -d "/opt/$folder" ]; then
+    echo "Warning: Folder /opt/$folder exists!"
+    echo 'Warning: If something goes wrong please clean /opt folder and try again.'
+  else
+    mkdir -p /opt/$folder
+  fi
+done
+
+echo 'Info: Opkg package manager deployment...'
+URL=http://bin.entware.net/${ARCH}/installer
+REPLACE_OPKG_MIRROR=0
+/tmp/curl -s -L $URL/opkg --connect-timeout 10 -o /opt/bin/opkg >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+  echo 'Warning: Trying mirrors.bfsu.edu.cn mirror repo...'
+  URL=http://mirrors.bfsu.edu.cn/entware/${ARCH}/installer
+  /tmp/curl -s -L $URL/opkg -o /opt/bin/opkg >/dev/null 2>&1
+  REPLACE_OPKG_MIRROR=1
+fi
+chmod 755 /opt/bin/opkg
+/tmp/curl -s -L $URL/opkg.conf -o /opt/etc/opkg.conf
+
+if [ $REPLACE_OPKG_MIRROR = '1' ]; then
+  sed -i "s,http://bin.entware.net/${ARCH},http://mirrors.bfsu.edu.cn/entware/${ARCH},g" /opt/etc/opkg.conf
+fi
+
+echo 'Info: Basic packages installation...'
+/opt/bin/opkg update
+if [ $TYPE = 'alternative' ]; then
+  /opt/bin/opkg install busybox
+fi
+/opt/bin/opkg install entware-opt
+
+# Fix for multiuser environment
+chmod 777 /opt/tmp
+
+for file in passwd group shells shadow gshadow; do
+  if [ $TYPE = 'generic' ]; then
+    if [ -f /etc/$file ]; then
+      ln -sf /etc/$file /opt/etc/$file
+    else
+      [ -f /opt/etc/$file.1 ] && cp /opt/etc/$file.1 /opt/etc/$file
+    fi
+  else
+    if [ -f /opt/etc/$file.1 ]; then
+      cp /opt/etc/$file.1 /opt/etc/$file
+    fi
+  fi
+done
+
+[ -f /etc/localtime ] && ln -sf /etc/localtime /opt/etc/localtime
+
+echo 'Info: Congratulations!'
+echo 'Info: If there are no errors above then Entware was successfully initialized.'
+echo 'Info: Add /opt/bin & /opt/sbin to $PATH variable'
+echo 'Info: Add "/opt/etc/init.d/rc.unslung start" to startup script for Entware services to start'
+if [ $TYPE = 'alternative' ]; then
+  echo 'Info: Use ssh server from Entware for better compatibility.'
+fi
+echo 'Info: Found a Bug? Please report at https://github.com/Entware/Entware/issues'
+~~~
+</details>
+
 Ce qui donne chez moi
+
 <pre>
 Connecting to raw.githubusercontent.com (185.199.109.133:443)
 writing to stdout
