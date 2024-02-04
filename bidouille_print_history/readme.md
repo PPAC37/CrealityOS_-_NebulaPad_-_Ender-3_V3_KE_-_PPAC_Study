@@ -51,7 +51,7 @@ reboot
 
 (Normalement là, a chaque démarrage, le lien symbolique sera créé par se service. Et donc on retrouve a l'url `http://<ip>/downloads/humbnail/historyL.txt` le contenu de `/usr/data/creality/userdata/history/print_history_record.json` )
 
-Chez moi c'est l'adresse [http://192.168.1.23/downloads/humbnail/historyL.txt](http://192.168.1.23/downloads/humbnail/historyL.txt)http://192.168.1.23/downloads/humbnail/historyL.txt
+Chez moi c'est l'adresse [http://192.168.1.23/downloads/humbnail/historyL.txt](http://192.168.1.23/downloads/humbnail/historyL.txt)
 
 
 
