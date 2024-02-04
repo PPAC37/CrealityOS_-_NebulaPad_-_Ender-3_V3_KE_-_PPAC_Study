@@ -144,8 +144,12 @@ dd if=/dev/mmcblk0p9 of=/usr/data/dd_mmcblk0p9.img
 ~~~
 Mais ensuite la copie vers la clé USB prend de l'ordre d'une heure
 ~~~
-mv /usr/data/dd_mmcblk0p9.img /tmp/udisk/sda1/
+mv -v /usr/data/dd_mmcblk0p9.img /tmp/udisk/sda1/
 ~~~
+~~~
+mv -v /usr/data/dd_mmcblk0p*.img /tmp/udisk/sda1/
+~~~
+
 </details>
 
 ---
