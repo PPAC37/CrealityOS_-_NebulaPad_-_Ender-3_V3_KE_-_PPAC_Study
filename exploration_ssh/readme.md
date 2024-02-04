@@ -38,8 +38,7 @@ overlayfs:/overlay on / type overlay (rw,sync,noatime,lowerdir=/,upperdir=/overl
 root@F005-4A88 /root [#]
 </pre>
 
-Pour mieux comprendre les sytemes de fichiers monté en "overlay" (en gros, une notion de supperposition de partitions. Une dite "lower" (en principe non modifiable) et une dite "upper" (pour les modifications effectuées) pour donner ici en "/" un systeme de fichier modifiable dont la coche "upper", "surcharge"/"masque"/"contient les modification de" la couche "lower" ... ) 
- - https://linuxconfig.org/introduction-to-the-overlayfs
+Pour mieux comprendre les sytemes de fichiers monté en "overlay" (en gros, une notion de supperposition de partitions. Une dite "lower" (en principe non modifiable) et une dite "upper" (pour les modifications effectuées) pour donner ici en "/" un systeme de fichier modifiable dont la coche "upper", "surcharge"/"masque"/"contient les modification de" la couche "lower" ... ) voir par exemple https://linuxconfig.org/introduction-to-the-overlayfs
 
 
 ---
@@ -103,9 +102,7 @@ Pour créer un fichier image de la partition mmcblk0p9 sur la clé USB (C'est tr
 dd if=/dev/mmcblk0p9 of=/tmp/udisk/sda1/dd_mmcblk0p9.img
 ~~~
 
-Pour plus de détails sur l'utilisation de la commande `dd`
-
-https://www.tecmint.com/clone-linux-partitions/
+Pour plus de détails sur l'utilisation de la commande `dd` voir par exemple https://www.tecmint.com/clone-linux-partitions/
 
 
 Faire une image de la partition dans un fichier sur `/usr/data` (point de montage de la partition mmcblk0p10) prend de l'ordre de 30 minutes.
@@ -118,7 +115,23 @@ mv /usr/data/dd_mmcblk0p9.img /tmp/udisk/sda1/
 ~~~
 </details>
 
+---
 
+~~~
+cat /usr/data/creality/userdata/config/system_version.json
+~~~
+retourne
+<pre>
+{
+  "sys_version":"V1.1.0.12",
+  "fw_version":"",
+  "app_version":1,
+  "hw_version":"F005",
+  "hw1_version":"",
+  "website":"www.creality.com"
+}</pre>
+
+---
 
 
 

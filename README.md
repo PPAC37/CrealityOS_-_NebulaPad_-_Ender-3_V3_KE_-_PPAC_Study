@@ -1,6 +1,6 @@
 # CrealityOS - NebulaPad - Ender-3 V3 KE - PPAC_Study
 
-Mes notes sur le firmware CrealityOS de la Ender-3 V3 KE
+Mes notes sur le firmware v1.1.0.12 (Creality OS) de la Ender-3 V3 KE
 
 
 > [!WARNING]
@@ -62,22 +62,6 @@ et de bien noter le nouveau mot de passe pour ne pas le perdre
 
 ---
 
-~~~
-cat /usr/data/creality/userdata/config/system_version.json
-~~~
-retourne
-~~~
-{
-  "sys_version":"V1.1.0.12",
-  "fw_version":"",
-  "app_version":1,
-  "hw_version":"F005",
-  "hw1_version":"",
-  "website":"www.creality.com"
-}
-~~~
-
----
 
 ~~~
 cat /usr/data/creality/userdata/config/system_version.json | jq -r '.sys_version'
@@ -99,61 +83,9 @@ retourne
 
 ---
 
-~~~
-mount
-~~~
-retourne
-~~~
-/dev/root on /rom type squashfs (ro,relatime)
-devtmpfs on /dev type devtmpfs (rw,relatime,size=100748k,nr_inodes=25187,mode=755)
-proc on /proc type proc (rw,relatime)
-devpts on /dev/pts type devpts (rw,relatime,gid=5,mode=620,ptmxmode=666)
-tmpfs on /dev/shm type tmpfs (rw,relatime,mode=777)
-tmpfs on /tmp type tmpfs (rw,relatime)
-tmpfs on /run type tmpfs (rw,nosuid,nodev,relatime,mode=755)
-sysfs on /sys type sysfs (rw,relatime)
-debugfs on /sys/kernel/debug type debugfs (rw,relatime)
-/dev/mmcblk0p9 on /overlay type ext4 (rw,sync,relatime,block_validity,delalloc,barrier,user_xattr)
-overlayfs:/overlay on / type overlay (rw,sync,noatime,lowerdir=/,upperdir=/overlay/upper,workdir=/overlay/work)
-/dev/mmcblk0p10 on /usr/data type ext4 (rw,sync,relatime,block_validity,delalloc,barrier,user_xattr)
-~~~
-
----
 
 
-##### Installation de fluidd
 
-// extrait du [README_en](https://github.com/CrealityOfficial/Ender-3_V3_KE_Annex/blob/main/fluidd/README_en) de [https://github.com/CrealityOfficial/Ender-3_V3_KE_Annex/tree/main/fluidd](https://github.com/CrealityOfficial/Ender-3_V3_KE_Annex/tree/main/fluidd)
-
-Instruction
-
-Put the same level directory file ( fluidd ) in the root directory of the U disk
-
-Copy the files ( fluidd.sh and fluidd.tar ) to directory ( /usr/data )
-~~~
-cp /tmp/udisk/sda1/fluidd/* /usr/data/
-~~~
-
-Install fluidd, moonraker and nginx
-~~~
-/usr/data/fluidd.sh install
-~~~
-
-unstall fluidd, moonraker and nginx
-~~~
-/usr/data/fluidd.sh unstall
-~~~
-
-Into fluidd
-
-IP with 4408 port
-
-eg, 192.168.1.1:4408
-
-
-Warning: Monnraker running for a long time on the K1 series poses a risk of memory overflow
-
----
 
 ### Bidouilles 
 pour que le serveur web serve le fichier /usr/data/creality/userdata/history/print_history_record.json via `http://<ip>/downloads/humbnail/historyL.txt`
