@@ -111,99 +111,7 @@ wget --no-check-certificate -O - "https://raw.githubusercontent.com/Guilouz/Crea
 ~~~
 
 <details>
- <summary>Le script `generic.sh` en question (Cliquez pour déplier!)</summary>
-~~~bash
-#!/bin/sh
-
-TYPE='generic'
-#TYPE='alternative'
-
-#|---------|-----------------------|---------------|---------------|---------------------|-------------------|-------------------|----------------------|-------------------|
-#| ARCH    | aarch64-k3.10         | armv5sf-k3.2  | armv7sf-k2.6  | armv7sf-k3.2        | mipselsf-k3.4     | mipssf-k3.4       | x64-k3.2             | x86-k2.6          |
-#| LOADER  | ld-linux-aarch64.so.1 | ld-linux.so.3 | ld-linux.so.3 | ld-linux.so.3       | ld.so.1           | ld.so.1           | ld-linux-x86-64.so.2 | ld-linux.so.2     |
-#| GLIBC   | 2.27                  | 2.27          | 2.23          | 2.27                | 2.27              | 2.27              | 2.27                 | 2.23              |
-#|---------|-----------------------|---------------|---------------|---------------------|-------------------|-------------------|----------------------|-------------------|
-
-unset LD_LIBRARY_PATH
-unset LD_PRELOAD
-
-ARCH=mipselsf-k3.4
-LOADER=ld.so.1
-GLIBC=2.27
-
-echo 'Info: Checking for prerequisites and creating folders...'
-if [ -d /opt ]; then
-    echo 'Warning: Folder /opt exists!'
-else
-    mkdir /opt
-fi
-# no need to create many folders. entware-opt package creates most
-for folder in bin etc lib/opkg tmp var/lock
-do
-  if [ -d "/opt/$folder" ]; then
-    echo "Warning: Folder /opt/$folder exists!"
-    echo 'Warning: If something goes wrong please clean /opt folder and try again.'
-  else
-    mkdir -p /opt/$folder
-  fi
-done
-
-echo 'Info: Opkg package manager deployment...'
-URL=http://bin.entware.net/${ARCH}/installer
-REPLACE_OPKG_MIRROR=0
-/tmp/curl -s -L $URL/opkg --connect-timeout 10 -o /opt/bin/opkg >/dev/null 2>&1
-if [ $? -ne 0 ]; then
-  echo 'Warning: Trying mirrors.bfsu.edu.cn mirror repo...'
-  URL=http://mirrors.bfsu.edu.cn/entware/${ARCH}/installer
-  /tmp/curl -s -L $URL/opkg -o /opt/bin/opkg >/dev/null 2>&1
-  REPLACE_OPKG_MIRROR=1
-fi
-chmod 755 /opt/bin/opkg
-/tmp/curl -s -L $URL/opkg.conf -o /opt/etc/opkg.conf
-
-if [ $REPLACE_OPKG_MIRROR = '1' ]; then
-  sed -i "s,http://bin.entware.net/${ARCH},http://mirrors.bfsu.edu.cn/entware/${ARCH},g" /opt/etc/opkg.conf
-fi
-
-echo 'Info: Basic packages installation...'
-/opt/bin/opkg update
-if [ $TYPE = 'alternative' ]; then
-  /opt/bin/opkg install busybox
-fi
-/opt/bin/opkg install entware-opt
-
-# Fix for multiuser environment
-chmod 777 /opt/tmp
-
-for file in passwd group shells shadow gshadow; do
-  if [ $TYPE = 'generic' ]; then
-    if [ -f /etc/$file ]; then
-      ln -sf /etc/$file /opt/etc/$file
-    else
-      [ -f /opt/etc/$file.1 ] && cp /opt/etc/$file.1 /opt/etc/$file
-    fi
-  else
-    if [ -f /opt/etc/$file.1 ]; then
-      cp /opt/etc/$file.1 /opt/etc/$file
-    fi
-  fi
-done
-
-[ -f /etc/localtime ] && ln -sf /etc/localtime /opt/etc/localtime
-
-echo 'Info: Congratulations!'
-echo 'Info: If there are no errors above then Entware was successfully initialized.'
-echo 'Info: Add /opt/bin & /opt/sbin to $PATH variable'
-echo 'Info: Add "/opt/etc/init.d/rc.unslung start" to startup script for Entware services to start'
-if [ $TYPE = 'alternative' ]; then
-  echo 'Info: Use ssh server from Entware for better compatibility.'
-fi
-echo 'Info: Found a Bug? Please report at https://github.com/Entware/Entware/issues'
-~~~
-</details>
-
-Ce qui donne chez moi
-
+ <summary>Ce qui donne chez moi (Cliquez pour déplier!)</summary>
 <pre>
 Connecting to raw.githubusercontent.com (185.199.109.133:443)
 writing to stdout
@@ -292,6 +200,7 @@ Info: Add /opt/bin & /opt/sbin to $PATH variable
 Info: Add "/opt/etc/init.d/rc.unslung start" to startup script for Entware services to start
 Info: Found a Bug? Please report at https://github.com/Entware/Entware/issues
 </pre>
+</details>
 
 Ne pas faire les "Info: ..." mais 
 
@@ -310,7 +219,8 @@ cd moonraker-obico
 sh ./scripts/install_creality.sh -k
 ~~~
 
-Ce qui donne mais que j'ai pas terminé ( pas l'app sur mon smartphone ... )
+<details>
+ <summary>Ce qui donne mais que j'ai pas terminé ( pas l'app sur mon smartphone ... ) (Cliquez pour déplier!)</summary>
 
 <pre>
 root@F005-4A88 /usr/data/moonraker-obico [#] sh ./scripts/install_creality.sh -k
@@ -536,6 +446,7 @@ Need help? Stop by:
 
 root@F005-4A88 /usr/data/moonraker-obico [#] 
 </pre>
+</details>
 
 Contrairement a ce qui est dit pour reprendre il faudrait plutôt faire 
 
