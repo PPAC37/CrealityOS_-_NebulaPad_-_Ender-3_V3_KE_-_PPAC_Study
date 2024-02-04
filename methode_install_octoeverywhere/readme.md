@@ -24,7 +24,7 @@ sh ./install.sh
 <pre>
 ...
 Website: https://octoeverywhere.com/code
-Code:    935409
+Code:    ******
 </pre>
 
 Et si tout c'est bien passé vous devrez pouvoir vous connecter via une url de la forme https://nom_de_machine.octoeverywhere.com/#/
