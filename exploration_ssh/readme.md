@@ -5,9 +5,9 @@ Exploration depuis le promt connecté en ssh utilisateur root
 ssh 192.168.1.23 -l
 ~~~
 On se retrouve normalement sur un truc qui resemble à
-~~~
+<pre>
 root@F005-4A88 /root [#] 
-~~~
+</pre>
 
 Note : Le nom d'hôte ici "F005-4A88" est la concatenation de "F005" (la Ender-3 V3 SE), du caractère "-", et des quatres dernier caractère de l'adresse MAC de la machine.
 
