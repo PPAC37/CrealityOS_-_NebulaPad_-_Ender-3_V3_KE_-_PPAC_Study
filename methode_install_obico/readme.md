@@ -4,7 +4,7 @@ Il faut savoir que CrealityOS ne fourni pas la commande `bash` et car il se trou
 
 Le plus simple c'est surement de passer par le "Installation Helper Script" de Guilouz [https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Installation-Helper-Script](https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Installation-Helper-Script
 )  
-pour pouvoir faire [https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Obico](https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Obico)
+pour pouvoir faire l'installation de entware [https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Install-Entware](https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Install-Entware) (un pré-requi) et de [https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Obico](https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Obico)
 
 ~~~
 cd && wget --no-check-certificate https://raw.githubusercontent.com/Guilouz/Creality-K1-and-K1-Max/main/Scripts/installer.sh
@@ -78,6 +78,8 @@ cd && sh ./installer.sh
  │                                                              │
  └──────────────────────────────────────────────────────────────┘
 
+ Type your choice and validate with Enter: 5 // installer entware qui fournis opkg requi pour ensuite installer obico
+// Puis
  Type your choice and validate with Enter: 20
 </pre>
 
@@ -456,4 +458,80 @@ sh ./scripts/install_creality.sh -k
 ~~~
 
 ---
+
+
+Histoire de voir le packets installé d'opkg
+~~~
+opkg list-installed
+~~~
+<details>
+ <summary>Se qui donne chez moi (Cliquez pour déplier!)</summary>
+<pre>
+root@F005-4A88 /root [#] opkg list-installed
+ca-certificates - 20230311-1
+entware-opt - 227000-3
+entware-release - 1.0-2
+entware-upgrade - 1.0-1
+findutils - 4.9.0-1a
+grep - 3.8-2
+libatomic - 8.4.0-11
+libbz2 - 1.0.8-1a
+libc - 2.27-11
+libffi - 3.4.2-2
+libgcc - 8.4.0-11
+libgdbm - 1.21-2
+liblzma - 5.4.4-1
+libncursesw - 6.4-2
+libopenssl - 3.0.10-1
+libpcre2 - 10.42-1
+libpthread - 2.27-11
+libpython3 - 3.11.4-1
+libreadline - 8.2-1
+librt - 2.27-11
+libsqlite3 - 3410200-1
+libssp - 8.4.0-11
+libstdcpp - 8.4.0-11
+libuuid - 2.39-2
+locales - 2.27-9
+opkg - 2022-02-24-d038e5b6-2
+python3 - 3.11.4-1
+python3-asyncio - 3.11.4-1
+python3-base - 3.11.4-1
+python3-cgi - 3.11.4-1
+python3-cgitb - 3.11.4-1
+python3-codecs - 3.11.4-1
+python3-ctypes - 3.11.4-1
+python3-dbm - 3.11.4-1
+python3-decimal - 3.11.4-1
+python3-distutils - 3.11.4-1
+python3-email - 3.11.4-1
+python3-light - 3.11.4-1
+python3-logging - 3.11.4-1
+python3-lzma - 3.11.4-1
+python3-multiprocessing - 3.11.4-1
+python3-ncurses - 3.11.4-1
+python3-openssl - 3.11.4-1
+python3-pip - 23.2.1-1
+python3-pydoc - 3.11.4-1
+python3-readline - 3.11.4-1
+python3-sqlite3 - 3.11.4-1
+python3-unittest - 3.11.4-1
+python3-urllib - 3.11.4-1
+python3-uuid - 3.11.4-1
+python3-xml - 3.11.4-1
+terminfo - 6.4-2
+zlib - 1.2.13-1
+zoneinfo-asia - 2023c-2
+zoneinfo-core - 2023c-2
+zoneinfo-europe - 2023c-2
+</pre>
+</details>
+
+---
+
+En profiter pour installer `sftp` via `opkg` fournis par Entware ( cf la fin de [https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Install-Entware](https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Install-Entware) )
+~~~
+opkg install openssh-sftp-server; ln -s /opt/libexec/sftp-server /usr/libexec/sftp-server
+~~~
+
 
