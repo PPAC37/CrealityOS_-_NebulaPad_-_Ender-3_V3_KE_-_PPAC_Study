@@ -98,6 +98,18 @@ root@F005-4A88 /root [#]
 
 Pour créer un fichier image de la partition mmcblk0p9 sur la clé USB (C'est trés long de l'ordre d'une heure ou deux heures car l'on copie tout les block même les block vides de cette partition de 500 MB et la vitesse d'ecriture sur la clé USB fourni est très lente ... )
 
+partition de 500 MB avec un lable "rootfs" (stock ???)
+~~~
+dd if=/dev/mmcblk0p7 of=/usr/data/dd_mmcblk0p7.img
+~~~
+
+partition de 500 MB avec un lable "rootfs2" (stock ???)
+~~~
+dd if=/dev/mmcblk0p8 of=/usr/data/dd_mmcblk0p8.img
+~~~
+
+
+partition de 300 MB avec un lable "rootfs_data" (stoke le upper et work )
 ~~~
 dd if=/dev/mmcblk0p9 of=/tmp/udisk/sda1/dd_mmcblk0p9.img
 ~~~
