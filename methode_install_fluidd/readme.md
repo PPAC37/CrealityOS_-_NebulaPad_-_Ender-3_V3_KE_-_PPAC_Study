@@ -1,4 +1,39 @@
 
+##### Installation de fluidd
+
+// extrait du [README_en](https://github.com/CrealityOfficial/Ender-3_V3_KE_Annex/blob/main/fluidd/README_en) de [https://github.com/CrealityOfficial/Ender-3_V3_KE_Annex/tree/main/fluidd](https://github.com/CrealityOfficial/Ender-3_V3_KE_Annex/tree/main/fluidd)
+
+Instruction
+
+Put the same level directory file ( fluidd ) in the root directory of the U disk
+
+Copy the files ( fluidd.sh and fluidd.tar ) to directory ( /usr/data )
+~~~
+cp /tmp/udisk/sda1/fluidd/* /usr/data/
+~~~
+
+Install fluidd, moonraker and nginx
+~~~
+/usr/data/fluidd.sh install
+~~~
+
+unstall fluidd, moonraker and nginx
+~~~
+/usr/data/fluidd.sh unstall
+~~~
+
+Into fluidd
+
+IP with 4408 port
+
+eg, 192.168.1.1:4408
+
+
+Warning: Monnraker running for a long time on the K1 series poses a risk of memory overflow
+
+---
+
+
 EN COURS RE REALISATION !
 INCOMPLET et NON fonctionnel.
 
