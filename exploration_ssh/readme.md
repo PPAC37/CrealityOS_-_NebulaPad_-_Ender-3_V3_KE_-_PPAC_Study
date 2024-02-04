@@ -96,7 +96,9 @@ root@F005-4A88 /root [#]
 
 <details>
  <summary>Si l'on veux faire une image de la partition, cela prend du temps ... (Cliquez pour déplier!)</summary>
-Pour créer un fichier image de la partition mmcblk0p9 sur la clé USB (C'est trés long de l'ordre d'une heure ou deux heure car l'on copie tout le block même les block vides de cette partition de 500 MB)
+
+Pour créer un fichier image de la partition mmcblk0p9 sur la clé USB (C'est trés long de l'ordre d'une heure ou deux heures car l'on copie tout les block même les block vides de cette partition de 500 MB et la vitesse d'ecriture sur la clé USB fourni est très lente ... )
+
 ~~~
 dd if=/dev/mmcblk0p9 of=/tmp/udisk/sda1/dd_mmcblk0p9.img
 ~~~
