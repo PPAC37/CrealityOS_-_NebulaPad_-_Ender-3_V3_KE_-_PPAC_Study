@@ -201,9 +201,95 @@ root@F005-4A88 /root [#]
 ---
 
 
+/etc/init.d/S99start_app 
+~~~bash
+#!/bin/sh
+export TSLIB_CONFFILE=/etc/ts.conf
+export TSLIB_TSDEVICE=/dev/input/event0
+export TSLIB_FBDEVICE=/dev/fb0
+export TSLIB_PLUGINDIR=/usr/lib/ts
 
-~~~
+BIN_PATH=/usr/bin
+MASTER_SERVER=master-server
+AUDIO_SERVER=audio-server
+WIFI_SERVER=wifi-server
+APP_SERVER=app-server
+DISPLAY_SERVER=display-server
+UPGRADE_SERVER=upgrade-server
+WEB_SERVER=web-server
+MONITOR=Monitor
+DELAY_IMAGE_VIDEO_DIR=/usr/data/creality/userdata/delay_image/video
+LOG_DIR=/usr/data/creality/userdata/log
+FRONTEND_DOWNLOADS_DIR=/usr/share/frontend/downloads
+HUMBNAIL_DIR=/tmp/creality/local_gcode/humbnail
+ORIGINAL_DIR=/tmp/creality/original
+DEFDATA_DIR=/etc/sysConfig/defData
 
+stop_boot_display(){
+    kill -9 $(ps | grep boot_display | grep -v grep | awk '{printf $1" "}')
+}
+
+clean_old_logs(){
+    [ -d $LOG_DIR ] && rm -rf $LOG_DIR/*logfile*
+}
+
+start_server(){
+    [ -d $FRONTEND_DOWNLOADS_DIR ] ||  mkdir -p $FRONTEND_DOWNLOADS_DIR
+    [ -d $HUMBNAIL_DIR ] || mkdir -p $HUMBNAIL_DIR
+    [ -d $ORIGINAL_DIR ] || mkdir -p $ORIGINAL_DIR
+    [ -d $DELAY_IMAGE_VIDEO_DIR ] || mkdir -p $DELAY_IMAGE_VIDEO_DIR
+    [ -d $FRONTEND_DOWNLOADS_DIR -a -d $HUMBNAIL_DIR -a -d $ORIGINAL_DIR -a -d $DEFDATA_DIR ]\
+         && { ln -s $ORIGINAL_DIR $FRONTEND_DOWNLOADS_DIR; ln -s $HUMBNAIL_DIR $FRONTEND_DOWNLOADS_DIR;\
+         ln -s $DEFDATA_DIR $FRONTEND_DOWNLOADS_DIR; ln -s $DELAY_IMAGE_VIDEO_DIR $FRONTEND_DOWNLOADS_DIR;}
+
+    clean_old_logs
+
+    export HOME=/root
+    # sleep 2s # 应用进程延时启动，等待marlin先启动完成
+    sync && echo 3 > /proc/sys/vm/drop_caches
+    [ -x "$BIN_PATH/$MASTER_SERVER" ] && $BIN_PATH/$MASTER_SERVER &
+    # sleep 2s # 主动进程启动后延时，等待获取marlin状态完成
+    [ -x "$BIN_PATH/$AUDIO_SERVER" ] && $BIN_PATH/$AUDIO_SERVER &
+    [ -x "$BIN_PATH/$WIFI_SERVER" ] && $BIN_PATH/$WIFI_SERVER &
+    [ -x "$BIN_PATH/$APP_SERVER" ] && $BIN_PATH/$APP_SERVER &
+    [ -x "$BIN_PATH/$DISPLAY_SERVER" ] && $BIN_PATH/$DISPLAY_SERVER &
+    [ -x "$BIN_PATH/$UPGRADE_SERVER" ] && $BIN_PATH/$UPGRADE_SERVER &
+    [ -x "$BIN_PATH/$WEB_SERVER" ] && $BIN_PATH/$WEB_SERVER &
+    # 守护进程排在最后启动
+    [ -x "$BIN_PATH/$MONITOR" ] && $BIN_PATH/$MONITOR &
+}
+
+stop_server(){
+    killall $MONITOR
+    killall $DISPLAY_SERVER
+    killall $WIFI_SERVER
+    killall $APP_SERVER
+    killall $AUDIO_SERVER
+    killall $MASTER_SERVER
+    killall $UPGRADE_SERVER
+    killall $WEB_SERVER
+}
+
+# stop_boot_display
+
+case "$1" in
+    start)
+        start_server
+        ;;
+    stop)
+        stop_server
+        ;;
+    restart|reload)
+        "$0" stop
+        "$0" start
+        ;;
+    *)
+        echo "Usage:"
+        echo "    $0 {start|stop|restart}"
+        exit 1
+esac
+
+exit $?
 ~~~
 
 <pre>
@@ -218,11 +304,27 @@ root@F005-4A88 /root [#]
 
 
 ~~~
-
+ll /usr/data/creality/userdata/log
 ~~~
 
 <pre>
-
+root@F005-4A88 /root [#] ll /usr/data/creality/userdata/log
+total 96492
+drwxr-xr-x    2 root     root          4096 Feb  2 18:52 ./
+drwxr-xr-x    7 root     root          4096 Feb  2 19:11 ../
+-rw-r--r--    1 root     root           323 Mar  1  2020 Monitor.log
+-rw-r--r--    1 root     root       5324803 Feb  2 23:42 app-server.log
+-rw-r--r--    1 root     root         30942 Mar  1  2020 audio-server.log
+-rw-r--r--    1 root     root          1190 Mar  1  2020 cx_ai_middleware.log
+-rw-r--r--    1 root     root          5414 Mar  1  2020 device_manager.log
+-rw-r--r--    1 root     root      26715633 Feb  2 23:42 display-server.log
+-rw-r--r--    1 root     root           157 Feb  2 16:04 log_config.json
+-rw-r--r--    1 root     root      52201632 Feb  2 23:42 master-server.log
+-rw-r--r--    1 root     root       5567643 Feb  2 18:52 master-server.log.1.gz
+-rw-r--r--    1 root     root          6529 Mar  1  2020 upgrade-server.log
+-rw-r--r--    1 root     root       6441247 Feb  2 23:42 web-server.log
+-rw-r--r--    1 root     root          7438 Mar  1  2020 webrtc.log
+-rw-r--r--    1 root     root       2332059 Feb  2 23:42 wifi-server.log
 </pre>
 
 
@@ -233,11 +335,17 @@ root@F005-4A88 /root [#]
 
 
 ~~~
-
+cat /usr/data/creality/userdata/log/log_config.json 
 ~~~
 
 <pre>
-
+root@F005-4A88 /root [#] cat /usr/data/creality/userdata/log/log_config.json 
+{
+  "#log_level":"LOG_DEFAULT=0, LOG_DEBUG=1, LOG_INFO=2, LOG_WARNING=3, LOG_ERROR=4",
+  "log_level":1,
+  "#log_route":"file=1, console=0",
+  "log_route":1
+}root@F005-4A88 /root [#] 
 </pre>
 
 
