@@ -22,6 +22,21 @@ Mes notes sur le firmware v1.1.0.12 (Creality OS) de la Ender-3 V3 KE
   - [https://www.lesimprimantes3d.fr/forum/topic/56971-obico-sur-ender-v3-ke/#comment-578771](https://www.lesimprimantes3d.fr/forum/topic/56971-obico-sur-ender-v3-ke/#comment-578771)
   - [https://www.lesimprimantes3d.fr/forum/topic/57003-boulette-suite-maj-ender-3-v3-ke-firmware-11012-root%C3%A9-plantage-suite-mise-a-jour-de-klipper-via-linterface-fluidd/#comment-579230](https://www.lesimprimantes3d.fr/forum/topic/57003-boulette-suite-maj-ender-3-v3-ke-firmware-11012-root%C3%A9-plantage-suite-mise-a-jour-de-klipper-via-linterface-fluidd/#comment-579230)
 
+## Mot de passe des archives .7z d'export de logs
+
+Quand on fait un export de logs depuis l'ecran Nebula Pad de la Ender-3 V3 KE, on se retrouve avec une archier .7z protégé par un mot de passe
+exemple de nom d'archive `2023-12-19_12-57-13_creality_log.7z` 
+
+Voici le mot de passe
+
+```
+b[^8xd6fR$w*N&em
+```
+
+Source https://www.reddit.com/r/Ender3V3KE/comments/1ah6vde/comment/kovd3vb/ (merci a l'utilisateur "slipx06")
+
+En fait le mot de passe se trouve caché dans le code binaire de `/usr/bin/display-server` mais je ne l'aurais jamais trouvé. ( Pour plus de détails voir https://www.lesimprimantes3d.fr/forum/topic/56116-creality-ender-3-v3-ke-la-d%C3%A9couverte-avant-le-test/?do=findComment&comment=579689 
+)
 
 ## Firmware v1.1.0.12 Officiel qui dispose d'un mode root
 
