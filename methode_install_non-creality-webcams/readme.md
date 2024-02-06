@@ -6,16 +6,18 @@ Sources :
 # Pré-requis
 
 - mode root
-- avoir installé entware [https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Install-Entware](https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Install-Entware) pour disposé de `opkg` via le script d'aide a l'installiotn de Guilouz
+- pour disposé de `opkg` via le script d'aide a l'installiotn de Guilouz, avoir installé Entware [https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Install-Entware](https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Install-Entware) 
 ~~~
 cd && wget --no-check-certificate https://raw.githubusercontent.com/Guilouz/Creality-K1-and-K1-Max/main/Scripts/installer.sh
 cd && sh ./installer.sh
 ~~~
 
-Une fois opkg installé l'utiliser pour installer les pacjets suivants
+Utiliser `opkg` (fourni par Entware) pour installer les pacjets suivants
 ~~~
 opkg install mjpg-streamer
 ~~~
+<details>
+ <summary>... (Cliquez pour déplier!)</summary>
 <pre>
 root@F005-4A88 /root [#] opkg install mjpg-streamer
 Installing mjpg-streamer (1.0.0-6) to root...
@@ -32,19 +34,23 @@ Configuring libv4l.
 Configuring mjpg-streamer.
 root@F005-4A88 /root [#] 
 </pre>
-
+</details>
 
 ~~~
 opkg install mjpg-streamer-input-uvc
 ~~~
+<details>
+ <summary>... (Cliquez pour déplier!)</summary>
 <pre>
 
 </pre>
-
+</details>
 
 ~~~
 opkg install mjpg-streamer-output-http
 ~~~
+<details>
+ <summary>... (Cliquez pour déplier!)</summary>
 <pre>
 root@F005-4A88 /root [#] opkg install mjpg-streamer-output-http
 Installing mjpg-streamer-output-http (1.0.0-6) to root...
@@ -60,7 +66,7 @@ root@F005-4A88 /root [#] /etc/init.d/S50non_creality_webcam restart
 killall: mjpg_streamer: no process killed
 root@F005-4A88 /root [#] 
 </pre>
-
+</details>
 
 Vérifier que votre Webcam se trouve bien connectée
 ~~~
@@ -75,10 +81,12 @@ root@F005-4A88 /root [#]
 </pre>
 
 
-savoir si v4l arrive a utiliser ce périphérique, lister les périphériques vidéos
+Pour vérifier si v4l (video for linux) trouve un périphérique vidéos
 ~~~
 v4l2-ctl --list-devices
 ~~~
+<details>
+ <summary>... (Cliquez pour déplier!)</summary>
 <pre>
 root@F005-4A88 /root [#] v4l2-ctl --list-devices
 jz-rot ():
@@ -101,8 +109,9 @@ vpu-helix (vpu-helix):
 
 root@F005-4A88 /root [#] 
 </pre>
+</details>
 
-
+Pour n'avoir que le/les périphes vidéos dont on a besoisn ici
 ~~~
 v4l2-ctl --list-devices|grep -A1 usb|sed 's/^[[:space:]]*//g'|grep '^/dev'
 ~~~
@@ -113,14 +122,12 @@ root@F005-4A88 /root [#]
 </pre>
 
 
-
-
-
-
 Pour connaitre les résolutions et format disponible pour se périphérique vidéo
 ~~~
 v4l2-ctl -d /dev/video4 --list-formats-ext
 ~~~
+<details>
+ <summary>... (Cliquez pour déplier!)</summary>
 <pre>
 root@F005-4A88 /root [#] v4l2-ctl -d /dev/video4 --list-formats-ext
 ioctl: VIDIOC_ENUM_FMT
@@ -190,7 +197,7 @@ ioctl: VIDIOC_ENUM_FMT
 			Interval: Discrete 0.067s (15.000 fps)
 root@F005-4A88 /root [#] 
 </pre>
-
+</details>
 
 
 Telecharger le script https://openk1.org/static/k1/scripts/multi-non-creality-webcams.sh
@@ -201,6 +208,8 @@ wget --no-check-certificate -O- 'https://openk1.org/static/k1/scripts/multi-non-
 <pre>
 
 </pre>
+
+
 
 ou copier coller la commande pour créé une version adapté pour ma Logitec C170 ( changement de la résolution )
 ~~~ bash
