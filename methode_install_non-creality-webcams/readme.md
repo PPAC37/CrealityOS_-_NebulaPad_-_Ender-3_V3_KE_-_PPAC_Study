@@ -213,10 +213,12 @@ cat > /etc/init.d/S50non_creality_webcam<<'===EOF==='
 # Notes PPAC : pré-requis 
 # lsusb # Dois avoir une ligne en plus quand on branche la WebCam sur l'un des ports USB du NebulaPad
 # ...
-# EntWare via le script de Guillouze pour avoir opkg
+# installer EntWare via le script de Guilouz pour avoir la commande opkg cf https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Entware
+# ...
+# opkg install mjpg-streamer
 # opkg install mjpg-streamer-input-uvc
 # opkg install mjpg-streamer-output-http
-# ... resolution
+# ... Adapter la resolution cf argument '-r' de mjpg_streamer ( cf "v4l2-ctl --list-devices|grep -A1 usb|sed 's/^[[:space:]]*//g'|grep '^/dev'" et "v4l2-ctl -d /dev/video4 --list-formats-ext" )
 
 case "$1" in
   start)
@@ -253,6 +255,7 @@ exit $?
 ===EOF===
 
 ~~~
+
 rendre exécutable le fichier `/etc/init.d/S50non_creality_webcam` fraichement créé
 ~~~
 chmod u+x /etc/init.d/S50non_creality_webcam
@@ -270,7 +273,7 @@ En principe s'il n'y avait pas de flux video déja servi par `/opt/bin/mjpg_stre
 </pre>
 
 
-Et là normalement l'on devrait obtenir un flux vidéo sur l'adresse ( remplacer 192.168.1.23 par l'adresse IP de votre imprimante dans votre réseau local)
+Et là normalement l'on devrait obtenir un flux vidéo à l'adresse ( remplacer 192.168.1.23 par l'adresse IP de votre imprimante dans votre réseau local)
 ~~~
 http://192.168.1.23:8080/?action=stream
 ~~~
