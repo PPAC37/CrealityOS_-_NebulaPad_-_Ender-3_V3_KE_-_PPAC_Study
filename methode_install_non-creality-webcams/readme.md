@@ -1,23 +1,20 @@
 
-Sources :
- - https://www.reddit.com/r/Creality_3D_Official/comments/18e7u7z/comment/kiwt83y/
- - destinal (utilisateur reddit)  et son serveur Discord https://discord.gg/d3vil-design
-
-# Pré-requis
-
-- mode root
-- pour disposé de `opkg` via le script d'aide a l'installiotn de Guilouz, avoir installé Entware [https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Install-Entware](https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Install-Entware) 
+Pré-requis
+- firmware v1.1.0.12 mode root activé
+- commande `opkg` fourni par Entware installable via le "[Helper Script Installation](https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Helper-Script-Installation)" de Guilouz ( cf  [https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Entware](https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Entware) )
 ~~~
 cd && wget --no-check-certificate https://raw.githubusercontent.com/Guilouz/Creality-K1-and-K1-Max/main/Scripts/installer.sh
 cd && sh ./installer.sh
 ~~~
 
-Utiliser `opkg` (fourni par Entware) pour installer les pacjets suivants
+---
+
+Utiliser `opkg` (fourni par Entware) pour installer les paquets suivants
 ~~~
 opkg install mjpg-streamer
 ~~~
 <details>
- <summary>... (Cliquez pour déplier!)</summary>
+ <summary>Résultat de la commande sur ma machine (Cliquez pour déplier!)</summary>
 <pre>
 root@F005-4A88 /root [#] opkg install mjpg-streamer
 Installing mjpg-streamer (1.0.0-6) to root...
@@ -40,9 +37,9 @@ root@F005-4A88 /root [#]
 opkg install mjpg-streamer-input-uvc
 ~~~
 <details>
- <summary>... (Cliquez pour déplier!)</summary>
+ <summary>Résultat de la commande sur ma machine (Cliquez pour déplier!)</summary>
 <pre>
-
+// A FAIRE
 </pre>
 </details>
 
@@ -50,7 +47,7 @@ opkg install mjpg-streamer-input-uvc
 opkg install mjpg-streamer-output-http
 ~~~
 <details>
- <summary>... (Cliquez pour déplier!)</summary>
+ <summary>Résultat de la commande sur ma machine (Cliquez pour déplier!)</summary>
 <pre>
 root@F005-4A88 /root [#] opkg install mjpg-streamer-output-http
 Installing mjpg-streamer-output-http (1.0.0-6) to root...
@@ -68,7 +65,7 @@ root@F005-4A88 /root [#]
 </pre>
 </details>
 
-Vérifier que votre Webcam se trouve bien connectée
+Vérifier que votre Webcam se trouve bien connectée (Ici, j'ai une Logitech C170)
 ~~~
 lsusb
 ~~~
@@ -81,12 +78,12 @@ root@F005-4A88 /root [#]
 </pre>
 
 
-Pour vérifier si v4l (video for linux) trouve un périphérique vidéos
+Vérifier que v4l (video for linux) trouve alors un périphérique vidéo
 ~~~
 v4l2-ctl --list-devices
 ~~~
 <details>
- <summary>... (Cliquez pour déplier!)</summary>
+ <summary>Résultat de la commande sur ma machine (Cliquez pour déplier!)</summary>
 <pre>
 root@F005-4A88 /root [#] v4l2-ctl --list-devices
 jz-rot ():
@@ -111,23 +108,22 @@ root@F005-4A88 /root [#]
 </pre>
 </details>
 
-Pour n'avoir que le/les périphes vidéos dont on a besoisn ici
+Pour n'avoir que le/les périphériques vidéos dont on a besoin ici
 ~~~
 v4l2-ctl --list-devices|grep -A1 usb|sed 's/^[[:space:]]*//g'|grep '^/dev'
 ~~~
+Dans mon cas cela donne
 <pre>
-root@F005-4A88 /root [#] v4l2-ctl --list-devices|grep -A1 usb|sed 's/^[[:space:]]*//g'|grep '^/dev'
 /dev/video4
-root@F005-4A88 /root [#] 
 </pre>
 
 
-Pour connaitre les résolutions et format disponible pour se périphérique vidéo
+Pour connaitre les résolutions et format disponible pour ce périphérique vidéo ici `/dev/video4` (mais cela peut changer chez vous)
 ~~~
 v4l2-ctl -d /dev/video4 --list-formats-ext
 ~~~
 <details>
- <summary>... (Cliquez pour déplier!)</summary>
+ <summary>Résultat de la commande sur ma machine (Cliquez pour déplier!)</summary>
 <pre>
 root@F005-4A88 /root [#] v4l2-ctl -d /dev/video4 --list-formats-ext
 ioctl: VIDIOC_ENUM_FMT
@@ -199,19 +195,15 @@ root@F005-4A88 /root [#]
 </pre>
 </details>
 
+---
 
 Telecharger le script https://openk1.org/static/k1/scripts/multi-non-creality-webcams.sh
-( mais là ma commande ne fonctionn pas ... ? http vs https ? , donc j'ai telechargé sur mon PC pour ensuite le transférer en sftp au préalable installé via opkg ...)
+( mais là ma commande ne fonctionn pas ... ? http vs https ? , donc j'ai telechargé sur mon PC pour ensuite le transférer en `sftp` au préalable installé via `opkg` ...)
 ~~~
 wget --no-check-certificate -O- 'https://openk1.org/static/k1/scripts/multi-non-creality-webcams.sh' > /etc/init.d/S50non_creality_webcam
 ~~~
-<pre>
 
-</pre>
-
-
-
-ou copier coller la commande pour créé une version adapté pour ma Logitec C170 ( changement de la résolution )
+ou copier coller le bloc suivant pour créé un fichier `/etc/init.d/S50non_creality_webcam` adapté pour ma Logitec C170 ( changement de la résolution cf `-r 640x360` )
 ~~~ bash
 cat > /etc/init.d/S50non_creality_webcam<<'===EOF==='
 #!/bin/sh
@@ -259,23 +251,26 @@ esac
 exit $?
 # Fin de mon ficher /etc/init.d/S50non_creality_webcam
 ===EOF===
+
+~~~
+rendre exécutable le fichier `/etc/init.d/S50non_creality_webcam` fraichement créé
+~~~
 chmod u+x /etc/init.d/S50non_creality_webcam
 ~~~
 
 
 
-
-
+Lancer le sercice `/etc/init.d/S50non_creality_webcam` fraichement créé
 ~~~
 /etc/init.d/S50non_creality_webcam restart
 ~~~
-En principe si il n'y avais pas de flux déja disponible cela fait un message d'erreur car il n'y a aucun pracess a kill c'est normal.
+En principe s'il n'y avait pas de flux video déja servi par `/opt/bin/mjpg_streamer`, cela fait un message car la commande `killall mjpg_streamer` ne tue aucun processus. C'est normal.
 <pre>
 ...
 </pre>
 
 
-Et là normalement l'on devrait obtenir un flux vidéo sur l'adresse ( remplécer 192.168.1.23 par l'ip de votre imprimante dans votre réseau local)
+Et là normalement l'on devrait obtenir un flux vidéo sur l'adresse ( remplacer 192.168.1.23 par l'adresse IP de votre imprimante dans votre réseau local)
 ~~~
 http://192.168.1.23:8080/?action=stream
 ~~~
@@ -283,33 +278,47 @@ ou
 ~~~
 http://192.168.1.23:4409/webcam/?action=stream
 ~~~
-<pre>
 
+Il est normal d'obtenir un genre de message d'erreur a l'url [http://192.168.1.23:8080/](http://192.168.1.23:8080/) car l'on utilise pas l'url complète
+<pre>
+501: Not Implemented!
+no www-folder configured
 </pre>
 
 
-
-Si pas de flux sous mainsail il peut y avoir besoins de supprimer et réajouté la caméra avec la config suivante : 
-
-streaming URL
+Sous l'interface web de mainsail (http://192.168.1.23:4409) si installé, il peut y avoir besoin de supprimer et recrééer une webcam avec la config suivante : 
+ - streaming URL
 ~~~
 http://192.168.1.23:4409/webcam/?action=stream
 ~~~
-
-snapshot URL
+ - snapshot URL
 ~~~
 http://192.168.1.23:4409/webcam/?action=snapshot
 ~~~
 
+---
 
+---
 
-Commandes a utiliser en ca s de soucis
+Commandes à utiliser en cas de soucis
+
 ~~~
 v4l2-ctl --all
 ~~~
+
 ~~~
 ls -la /opt/lib/mjpg-streamer/
 ~~~
+<pre>
+
+</pre>
+
 ~~~
 opkg install v4l-utils
 ~~~
+
+---
+
+
+Ressources :
+ - certain message de l'utilisateur reddit `destinal` et le serveur Discord [https://discord.gg/d3vil-design](https://discord.gg/d3vil-design)
