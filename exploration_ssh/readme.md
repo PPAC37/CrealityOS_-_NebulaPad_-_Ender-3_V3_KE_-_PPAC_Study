@@ -1,5 +1,4 @@
 
-
 Exploration depuis le promt connecté en ssh utilisateur root
 ~~~
 ssh 192.168.1.23 -l
@@ -316,4 +315,14 @@ if [ $? != 0 ]; then
 fi
 root@F005-4A88 /root [#]
 ~~~
+
+
+---
+
+Normalement on retrouve la valeur du Z-Offset dans le fichier
+~~~
+tail /usr/data/printer_data/config/printer.cfg
+~~~
+---
+
 
