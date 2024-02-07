@@ -324,4 +324,4 @@ opkg install v4l-utils
 
 
 Ressources :
- - Certains messages de l'utilisateur reddit `destinal` et le serveur Discord [https://discord.gg/d3vil-design](https://discord.gg/d3vil-design)
+ - Certains messages de l'utilisateur `destinal` sur https://www.reddit.com/r/Ender3V3KE/ et sur le serveur Discord [https://discord.gg/d3vil-design](https://discord.gg/d3vil-design)
