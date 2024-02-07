@@ -157,7 +157,14 @@ Warning: Monnraker running for a long time on the K1 series poses a risk of memo
 ~~~
 
 https://github.com/CrealityOfficial/Ender-3_V3_KE_Annex/raw/main/fluidd/fluidd/fluidd.tar
-
+(
+Si on a deja installé le maisail de Ender-3_V3_KE_Annex, qui embarque/install lui aussi nginx et moonraker,
+on peut uniquement extraire le dossier fluidd de l'archive fluidd.tar car contien le même nginx et fluidd ...)
+~~~
+tar -C /usr/data -xvf /usr/data/fluidd.tar "fluidd"
+~~~
+et ne pas utiliser le script d'install car les service moonraker et nginx sont deja installé et lancé.
+)
 https://github.com/CrealityOfficial/Ender-3_V3_KE_Annex/blob/main/fluidd/fluidd/fluidd.sh
 ~~~bash
 #!/bin/sh
