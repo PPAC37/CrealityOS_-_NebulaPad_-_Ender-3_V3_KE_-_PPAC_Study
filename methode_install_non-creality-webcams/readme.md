@@ -118,7 +118,7 @@ Dans mon cas cela donne
 </pre>
 
 
-Pour connaitre les résolutions et format disponible pour ce périphérique vidéo ici `/dev/video4` (mais cela peut changer chez vous)
+Pour connaitre les résolutions et format disponible pour ce périphérique vidéo ici `/dev/video4` (mais cela peut changer chez vous donc commande suivant a adapter au besoin)
 ~~~
 v4l2-ctl -d /dev/video4 --list-formats-ext
 ~~~
