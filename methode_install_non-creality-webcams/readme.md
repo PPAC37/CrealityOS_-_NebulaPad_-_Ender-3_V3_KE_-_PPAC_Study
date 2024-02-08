@@ -256,15 +256,17 @@ cat > /etc/init.d/S50non_creality_webcam<<'===EOF==='
 # S50non_creality_webcam - by destinal
 # Start up mjpg-streamer on port 8080 for non-creality cameras (where cam_app doesn't autostart)
 
-# Notes PPAC : pré-requis 
-# lsusb # Dois avoir une ligne en plus quand on branche la WebCam sur l'un des ports USB du NebulaPad
-# ...
-# installer EntWare via le script de Guilouz pour avoir la commande opkg cf https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Entware
-# ...
-# opkg install mjpg-streamer
-# opkg install mjpg-streamer-input-uvc
-# opkg install mjpg-streamer-output-http
-# ... Adapter la resolution cf argument '-r' de mjpg_streamer ( cf "v4l2-ctl --list-devices|grep -A1 usb|sed 's/^[[:space:]]*//g'|grep '^/dev'" et "v4l2-ctl -d /dev/video4 --list-formats-ext" )
+# Notes PPAC :
+## Source de la version original de ce script :
+# https://openk1.org/static/k1/scripts/multi-non-creality-webcams.sh
+## pré-requis 
+# - le résultat d'un "lsusb" doit avoir une ligne en plus quand on branche la Webcam sur l'un des ports USB du NebulaPad.
+# - installer Entware via le script de Guilouz pour avoir la commande "opkg" cf https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Entware
+# - opkg install mjpg-streamer
+# - opkg install mjpg-streamer-input-uvc
+# - opkg install mjpg-streamer-output-http
+# - Adapter la resolution cf argument '-r' de mjpg_streamer ( cf "v4l2-ctl --list-devices|grep -A1 usb|sed 's/^[[:space:]]*//g'|grep '^/dev'" et "v4l2-ctl -d /dev/video4 --list-formats-ext" )
+# Fin des notes de PPAC.
 
 case "$1" in
   start)
