@@ -6,6 +6,20 @@ Pré-requis
 cd && wget --no-check-certificate https://raw.githubusercontent.com/Guilouz/Creality-K1-and-K1-Max/main/Scripts/installer.sh
 cd && sh ./installer.sh
 ~~~
+Après avoir installé Entware, il faut soit exécuter la commande
+~~~
+export PATH="/opt/bin:/opt/sbin:$PATH"
+~~~
+soit se déconnecter et ré-ouvrir une connexion ssh (pour que la variable d'environnement PATH soit a jour car l'installation a placé un /etc/profile.d/entware.sh qui est automatiquement exécuté a l'ouverture d'une session.)
+
+<details>
+ <summary>Résultat de la commande sur ma machine (Cliquez pour déplier!)</summary>
+<pre>
+root@F005-4A88 /root [#] cat /etc/profile.d/entware.sh 
+export PATH="/opt/bin:/opt/sbin:$PATH"
+root@F005-4A88 /root [#] export PATH="/opt/bin:/opt/sbin:$PATH"
+</pre>
+</details>
 
 ---
 
