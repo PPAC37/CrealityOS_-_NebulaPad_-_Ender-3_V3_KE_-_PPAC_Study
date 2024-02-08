@@ -15,9 +15,41 @@ soit se déconnecter et ré-ouvrir une connexion ssh (pour que la variable d'env
 <details>
  <summary>Résultat de la commande sur ma machine (Cliquez pour déplier!)</summary>
 <pre>
+root@F005-4A88 /root [#] opkg
+-sh: opkg: not found
+root@F005-4A88 /root [#] 
+
 root@F005-4A88 /root [#] cat /etc/profile.d/entware.sh 
 export PATH="/opt/bin:/opt/sbin:$PATH"
+root@F005-4A88 /root [#] 
+
 root@F005-4A88 /root [#] export PATH="/opt/bin:/opt/sbin:$PATH"
+root@F005-4A88 /root [#] 
+
+root@F005-4A88 /root [#] which opkg
+/opt/bin/opkg
+root@F005-4A88 /root [#] 
+
+root@F005-4A88 /root [#] opkg list-installed
+entware-opt - 227000-3
+entware-release - 1.0-2
+entware-upgrade - 1.0-1
+findutils - 4.9.0-1a
+grep - 3.8-2
+libc - 2.27-11
+libgcc - 8.4.0-11
+libpcre2 - 10.42-1
+libpthread - 2.27-11
+librt - 2.27-11
+libssp - 8.4.0-11
+libstdcpp - 8.4.0-11
+locales - 2.27-9
+opkg - 2022-02-24-d038e5b6-2
+terminfo - 6.4-2
+zoneinfo-asia - 2023c-2
+zoneinfo-core - 2023c-2
+zoneinfo-europe - 2023c-2
+root@F005-4A88 /root [#] 
 </pre>
 </details>
 
