@@ -40,9 +40,7 @@ et, une photo qui indiquer le pinout d'un g-sensor
 ( mais je ne sais pas si c'est standard ou si cela change selon les g-sensors, donc a vérifier )
 
 https://discord.com/channels/1154500511777693819/1194193938962186301/1194199344597979256 de l'utilisateur "destinal"
-
-
+<!--
 ADXL345-CR-pinout.webp.fca17e731e4610e1cd5d99d90424d507.webp
-
-
+-->
 ![image](https://github.com/PPAC37/CrealityOS_-_NebulaPad_-_Ender-3_V3_KE_-_PPAC_Study/assets/94939582/d5660055-bec3-4e57-b368-c9b0a087592c)
