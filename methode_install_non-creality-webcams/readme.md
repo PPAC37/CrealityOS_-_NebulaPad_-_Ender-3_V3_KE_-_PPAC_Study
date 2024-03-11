@@ -3,12 +3,15 @@ Pour une version de ce tutoriel avec des captures d'ecrans (mais avec moins de r
 [https://www.lesimprimantes3d.fr/tutoriel-installer-webcam-logitech-creality-ender-3-v3-ke-20240209/](https://www.lesimprimantes3d.fr/tutoriel-installer-webcam-logitech-creality-ender-3-v3-ke-20240209/)
 
 
+2024-03-11 **Depuis la publication de ce tutoriel Guilouz a fait quelque changements. J'ai normalement adapté ici les liens et commandes qui ont changés**
+
+
 Pré-requis
 - firmware v1.1.0.12 mode root activé
-- commande `opkg` fourni par Entware installable via le "[Helper Script Installation](https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Helper-Script-Installation)" de Guilouz ( cf  [https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Entware](https://github.com/Guilouz/Creality-K1-and-K1-Max/wiki/Entware) )
+- commande `opkg` fourni par Entware installable via le "[Helper Script Installation](https://guilouz.github.io/Creality-K1-Series/helper-script/helper-script-installation/)" de Guilouz ( cf  [https://guilouz.github.io/Creality-K1-Series/helper-script/entware/](https://guilouz.github.io/Creality-K1-Series/helper-script/entware/) )
 ~~~
-cd && wget --no-check-certificate https://raw.githubusercontent.com/Guilouz/Creality-K1-and-K1-Max/main/Scripts/installer.sh
-cd && sh ./installer.sh
+git clone https://github.com/Guilouz/Creality-Helper-Script.git /usr/data/helper-script
+sh /usr/data/helper-script/helper.sh
 ~~~
 Après avoir installé Entware, il faut  
 soit exécuter la commande
